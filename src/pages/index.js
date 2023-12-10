@@ -5,15 +5,14 @@ import { readItems } from '@directus/sdk';
 
 
 async function getGlobals() {
-  return directus.request(readItems('Global'));
+  return directus.request(readItems('global'));
 }
 
 export default function Home({ global }) {
   return (
     <main className={`flex min-h-screen flex-col items-center justify-between p-24 `}>
       <div>
-        <h1>{global.Title}</h1>
-        <p>{global.Description}</p>
+        <h1>{global[0].title}</h1>
       </div>
     </main>
   );
@@ -27,7 +26,6 @@ export async function getStaticProps() {
       props: {
         global,
       },
-      revalidate: 10,
     };
  
 }
