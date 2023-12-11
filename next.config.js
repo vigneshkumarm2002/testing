@@ -2,7 +2,7 @@
 
 const nextConfig = {
   reactStrictMode: true,
-  distDir: '.vercel/output/static', // Change 'out' to your desired output folder
+  // Change 'out' to your desired output folder
 }
 
 module.exports = nextConfig
