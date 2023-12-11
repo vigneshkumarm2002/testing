@@ -2,6 +2,7 @@
 
 const nextConfig = {
   reactStrictMode: true,
+  output: 'export',
   distDir: 'out', // Change 'out' to your desired output folder
 }
 
