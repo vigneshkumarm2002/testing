@@ -5,7 +5,7 @@ import SingleReport from "./viewModal";
 const Table = ({ data, pagination = true , alignedRight }) => {
   console.log("error",data)
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage] = useState(pagination ? 5 : data.length);
+  const [rowsPerPage] = useState(5);
   const[showModal, setShowModal]=useState(false)
   const [singleData, setSingleData]=useState(null)
 
@@ -67,7 +67,7 @@ const isAmountOrBalanceKey = (key) => {
 
   return (
     <div className="w-full flex flex-col gap-4 mt-4">
-      <div className="ml-auto flex gap-4">
+      {/* <div className="ml-auto flex gap-4">
         <button className="relative inline-flex gap-2 items-center rounded-md bg-white px-3 py-2 text-xs font-medium text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">
           <PrinterIcon className="w-4 h-4 " />
           Print
@@ -148,7 +148,7 @@ const isAmountOrBalanceKey = (key) => {
             </div>
           </nav>
         </div>
-      )}
+      )} */}
 
 
       <SingleReport  open={showModal} setOpen={setShowModal} data={singleData}/>

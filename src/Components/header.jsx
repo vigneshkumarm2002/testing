@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import LogoImage from "./../assets/cmda.png"
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import BankLogo from "./../assets/bank.png"
 
 
@@ -30,6 +30,13 @@ export default function Header({sidebarOpen, setSidebarOpen}) {
     // Update hideLogo state based on the current location
     setHideLogo(shouldHideLogo());
   }, [location]);
+
+  const navigate =useNavigate()
+
+  const handleLogout=()=>{
+    localStorage.removeItem("is_authenticated")
+    navigate("/login")
+  }
      
   return (
     <Disclosure as="nav" className="bg-[#0066ff] h-[64px] fixed w-full z-10">
@@ -100,12 +107,12 @@ export default function Header({sidebarOpen, setSidebarOpen}) {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <Link
-                            to={"/user-master"}
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          <button
+                          onClick={handleLogout}
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 w-full py-2 text-left text-sm text-gray-700')}
                           >
                             Sign out
-                          </Link>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>
