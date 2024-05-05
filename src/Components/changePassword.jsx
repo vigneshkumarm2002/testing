@@ -131,18 +131,12 @@ export default function ChangePassword() {
   const [error, setError] = useState("");
   
 
-  // useEffect(() => {                                             //Doubt Need To Check     
-  //   const userIdFromSession = localStorage.getItem("userId"); 
-  //   setUserId(userIdFromSession);
-  // }, []);
+  useEffect(() => {                                             //Doubt Need To Check     
+    const userIdFromSession = localStorage.getItem("userId"); 
+    setUserId(userIdFromSession);
+  }, []);
 
-  // useEffect(() => {
-  //   // Fetch userId from session when component mounts
-  //   const cookies = document.cookie.split('; ');
-  //   const userIdCookie = cookies.find(cookie => cookie.startsWith('userId='));
-  //   const userIdFromSession = userIdCookie ? userIdCookie.split('=')[1] : null;
-  //   setUserId(userIdFromSession);
-  // }, []);
+  
   
 
   const handleOldPasswordChange = (event) => {
@@ -174,6 +168,32 @@ export default function ChangePassword() {
       }
     }
   };
+//   const handleSubmit = async (event) => {
+//     event.preventDefault();
+//     if (newPassword !== confirmPassword) {
+//       setError("Passwords do not match");
+//     } else {
+//       try {
+//         setError(""); // Clear any previous errors
+//         // Call the API function to change the password
+//         await changePasswordApi(userId, oldPassword, newPassword);
+//         // Password changed successfully, show success message
+//         const successMessage = document.createElement("div");
+//         successMessage.textContent = "Password changed successfully";
+//         successMessage.style.color = "green";
+//         // Append success message to the DOM
+//         document.body.appendChild(successMessage);
+//         // Optionally, you can reload the page after a certain time
+//         setTimeout(() => {
+//           successMessage.remove(); // Remove success message after a certain time
+//           window.location.reload();
+//         }, 1000); // 1000 milliseconds (1 seconds) - adjust as needed
+//       } catch (error) {
+//         setError("Failed to change password");
+//       }
+//     }
+// };
+
 
   return (
     <>

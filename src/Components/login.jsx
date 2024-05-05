@@ -16,7 +16,7 @@ export default function LoginUser() {
 
     if(checkAuthenticate){
       setShowPage(false)
-      navigate("/user-master")
+      navigate("/")
     }
     else{
       setShowPage(true)
@@ -51,7 +51,10 @@ export default function LoginUser() {
         if (data?.userId) 
         {
           storeUserAccess(data?.userId); 
-          navigate("/user-master")
+          
+          localStorage.setItem("userName",data?.userName)
+          localStorage.setItem("userId",data?.userId)
+          navigate("/")
           localStorage.setItem("is_authenticated",true)
         } 
         else 
@@ -83,7 +86,9 @@ export default function LoginUser() {
         throw new Error('Failed to fetch users');
       }
       const data = await response.json();
+      localStorage.setItem("access",data)
       console.log("access", data);
+      window.location.reload();
     } catch (error) {
       console.error('Error fetching users:', error);
     }
@@ -141,7 +146,8 @@ export default function LoginUser() {
                   />
                 </div>
               </div> 
-              <div id="loginErrorMessage" style={{display: 'none', color: 'red'}}>Please enter valid username and password</div>         
+              {/* <div id="loginErrorMessage" style={{display: 'none', color: 'red'}}>Please enter valid username and password</div>          */}
+              <div id="loginErrorMessage" style={{display: 'none', color: 'red'}}>Login Details are Not Correct</div>         
               <div className="flex justify-center"> 
                 <button
                   type="submit"

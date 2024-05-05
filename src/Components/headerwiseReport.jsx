@@ -437,6 +437,7 @@ const Table = ({ data, pagination = true }) => {
       "Challan No": fileDetails.challanNumber,
       "File No": fileDetails.fileNumber,
       "Transaction id": fileDetails.cmdaOrderId,
+      "Zone": fileDetails.zone,
       "Amount (INR)": formatAmountWithCommas(fileDetails.transactionAmount),
       "Payment Status": fileDetails.status === 2 ? 'Paid' : 'Notpaid',
       "Payment Mode": "Credit Card",                      //Doubt Ram - Need to check
@@ -514,6 +515,9 @@ const Table = ({ data, pagination = true }) => {
                 Transaction id
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Zone
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Amount (INR)
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -531,7 +535,8 @@ const Table = ({ data, pagination = true }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 text-xs">
-            {data.map((transaction) => (
+            {/* {data.map((transaction) => ( */}
+            {(currentRows ? currentRows : data).map((transaction) => (
               <tr key={transaction.transactionId}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button className="text-blue-600 hover:text-blue-900" onClick={() => onViewClick(transaction)}>View</button>
@@ -542,6 +547,7 @@ const Table = ({ data, pagination = true }) => {
                 <td className="px-6 py-4 whitespace-nowrap">{transaction.challanNumber}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{transaction.fileNumber}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{transaction.cmdaOrderId}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{transaction.zone}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.transactionAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{transaction.status === 2 ? 'Paid' : 'NotPaid'}</td>
                 {/* //Doubt Ram - Need to check */}

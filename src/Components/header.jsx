@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import LogoImage from "./../assets/cmda.png"
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useAsyncError, useLocation, useNavigate } from 'react-router-dom'
 import BankLogo from "./../assets/bank.png"
 
 
@@ -12,6 +12,8 @@ function classNames(...classes) {
 }
 
 export default function Header({sidebarOpen, setSidebarOpen}) {
+
+  const [userName, setUserName]=useState("")
 
   const location = useLocation();
   const hideLogoRoutes = ['/payment', '/checkout', '/payment-page', '/payment-confirm',"/e-pay"];
@@ -37,6 +39,14 @@ export default function Header({sidebarOpen, setSidebarOpen}) {
     localStorage.removeItem("is_authenticated")
     navigate("/login")
   }
+
+  const getName=localStorage?.getItem("userName")
+  useEffect(()=>{
+  
+  if(getName){
+    setUserName(getName)
+  }
+  },[])
      
   return (
     <Disclosure as="nav" className="bg-[#0066ff] h-[64px] fixed w-full z-10">
@@ -93,7 +103,7 @@ export default function Header({sidebarOpen, setSidebarOpen}) {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right text-left rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
              
               <p className='block px-4 py-2 text-sm text-gray-700'>
-                Welcome! Vigneshkumar M
+                {userName}
               </p>
               <Menu.Item>
                         {({ active }) => (

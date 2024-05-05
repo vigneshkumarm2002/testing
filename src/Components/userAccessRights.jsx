@@ -23,7 +23,7 @@ const UserAccessRights = () => {
       fileDetails: 0
     }]
   }
-  const [selectedUser, setSelectedUser] = useState({ id: '', name: '' });
+  const [selectedUser, setSelectedUser] = useState(null);
   const [checkedItems, setCheckedItems] = useState(initialState);
 
   const [users, setUsers] = useState([]); // State to store users
@@ -87,8 +87,9 @@ const normalizeString = (str) => {
   const word1 = words[0].toLowerCase();
   // Convert the second word's first character to uppercase
   const word2 = words.length > 1 ? words[1]?.charAt(0).toUpperCase() + words[1]?.slice(1).toLowerCase() : '';
+  const word3 = words.length > 2 ? words[2]?.charAt(0).toUpperCase() + words[2]?.slice(1).toLowerCase() : '';
   // Join the words together
-  return word1 + word2;
+  return word1 + word2 + word3;
 };
 
   const handleCheckboxChange = (event, category) => {
@@ -124,7 +125,8 @@ const normalizeString = (str) => {
   const handleUserChange = (event) => {
     const userId = event.target.value;
     const selectedUserData = users.find(user => user.id === userId); // Find the selected user data
-    console.log("sele",selectedUserData)
+
+    setSelectedUser(selectedUserData?.id)
     setCheckedItems(prevState => ({
       ...prevState,
       username:selectedUserData?.name ,
@@ -132,6 +134,24 @@ const normalizeString = (str) => {
        
     }));
   }
+
+
+  const fetchPermission = async () => {
+    try {
+      const response = await fetch(`http://localhost:5063/api/User/UserAccessGet?userID=${selectedUser}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch users');
+      }
+      const data = await response.json();
+      setCheckedItems(data)
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  }
+
+  useEffect(()=> {
+    fetchPermission()
+  },[selectedUser])
 
 
   const handleSubmit = async (event) => {
@@ -153,18 +173,13 @@ const normalizeString = (str) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
+      alert("UserAccess changed successfully");
+      window.location.reload();
 
-      console.log("checkkitt")
-  
-    //  alert("Given User Access")
-    //  setCheckedItems(initialState)
-  
     } catch (error) {
       // Handle error
       console.error("There was an error!", error);
     }
-
-
   };
   
   

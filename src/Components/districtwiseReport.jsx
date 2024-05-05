@@ -254,9 +254,9 @@ const Table = ({ data, pagination = true }) => {
       "File No": fileDetails.fileNumber,
       "Transaction id": fileDetails.cmdaOrderId,
       "Zone": fileDetails.zone,
-      "Challan Amount (INR)": formatAmountWithCommas(fileDetails.transactionAmount),
       // "Budget Header": fileDetails.budgetHeaderNames,
       "Budget Header": budgetHeaderNames,
+      "Challan Amount (INR)": formatAmountWithCommas(fileDetails.transactionAmount),
       "Payment Status": fileDetails.status === 2 ? 'Paid' : 'Notpaid',
       "Gateway": fileDetails.gatewayName,
       "Payment Mode": "Credit Card"                  //Doubt Ram - Need to check
@@ -350,7 +350,8 @@ const Table = ({ data, pagination = true }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 text-xs">
-            {data.map((transaction) => (
+            {/* {data.map((transaction) => ( */}
+            {(currentRows ? currentRows : data).map((transaction) => (
               <tr> 
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button className="text-blue-600 hover:text-blue-900" onClick={() => onViewClick(transaction)}>View</button>

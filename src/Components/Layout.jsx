@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Sidebar from './sidebar';
 import FileDetails from './FileDetails';
@@ -17,8 +17,11 @@ import MISHeader from './MIS/headerwise';
 import MISDistrict from './MIS/districtwiseMIS';
 import MISApplicant from './MIS/applicantMIS';
 import ESlip from './eSlip';
+import ProtectedRoute from './protectedRoute';
+import AccessDenied from './accessDenied';
+import Dashboard from './dashboard';
 
-const Layout = ({ sidebarOpen, setSidebarOpen }) => {
+const Layout = ({ sidebarOpen, setSidebarOpen,  }) => {
   const location = useLocation();
   const hideSidebarRoutes = ['/payment', '/checkout', '/payment-page', '/payment-confirm','/e-pay','/login'];
 
@@ -27,27 +30,31 @@ const Layout = ({ sidebarOpen, setSidebarOpen }) => {
     return hideSidebarRoutes.includes(location.pathname);
   };
 
+ 
+
   return (
     <div className="flex lg:gap-4">
       {!shouldHideSidebar() && <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
       <div className={` ${shouldHideSidebar() ? 'pt-[78px]' : 'w-full overflow-hidden lg:pl-[260px] pt-[78px] py-4 px-4'}`}>
         <Routes>
-        <Route path="/" element={<UserMaster />} />
-          <Route path="/gateteway-reports/transaction" element={<TransactionReport />} />
-          <Route path="/mis-reports/file-list" element={<FileList />} />
-          <Route path="/mis-reports/file-details" element={<FileDetails />} />
-          <Route path="/user-master" element={<UserMaster />} />
-          <Route path="/user-access-rights" element={<UserAccessRights />} />
-          <Route path="/gateteway-reports/localbody" element={<LocalBodyReport/>} />
-          <Route path="/gateteway-reports/headerwise" element={<HeaderwiseReport />} />
-          <Route path="/gateteway-reports/districtwise" element={<DistrictWiseReport />} />
-          <Route path="/gateteway-reports/applicant" element={<ApplicantReport />} />
-          <Route path="/change-password" element={<ChangePassword />} />
-          <Route path="/mis-reports/localbody" element={<MISLocalBody />} />
-          <Route path="/mis-reports/headerwise" element={<MISHeader />} />
-          <Route path="/mis-reports/districtwise" element={<MISDistrict />} />
-          <Route path="/mis-reports/applicant" element={<MISApplicant />} />
-      
+        <Route path="/" element={   
+        <Dashboard />
+ } />
+          <Route path="/gateteway-reports/transaction" element={ <ProtectedRoute permission={["gatewayTransaction"]}><TransactionReport />   </ProtectedRoute> } />
+          <Route path="/mis-reports/file-list" element={ <ProtectedRoute permission={["misFileList"]}><FileList />   </ProtectedRoute> } />
+          <Route path="/mis-reports/file-details" element={ <ProtectedRoute permission={["misFileDetails"]}><FileDetails />   </ProtectedRoute> } />
+          <Route path="/user-master" element={ <ProtectedRoute permission={["userMaster"]}><UserMaster />   </ProtectedRoute> } />
+          <Route path="/user-access-rights" element={  <ProtectedRoute permission={["userAccessRights"]}> <UserAccessRights />    </ProtectedRoute> } />
+          <Route path="/gateteway-reports/localbody" element={ <ProtectedRoute permission={["gatewayLocalBody"]}><LocalBodyReport/>   </ProtectedRoute> } />
+          <Route path="/gateteway-reports/headerwise" element={<ProtectedRoute permission={["gatewayHeader"]}><HeaderwiseReport />   </ProtectedRoute> } />
+          <Route path="/gateteway-reports/districtwise" element={ <ProtectedRoute permission={["gatewayDistrict"]}><DistrictWiseReport />   </ProtectedRoute> } />
+          <Route path="/gateteway-reports/applicant" element={ <ProtectedRoute permission={["gatewayApplicant"]}><ApplicantReport />   </ProtectedRoute> } />
+          <Route path="/change-password" element={ <ProtectedRoute permission={["changePassword"]}><ChangePassword />   </ProtectedRoute> } />
+          <Route path="/mis-reports/localbody" element={ <ProtectedRoute permission={["misLocalBody"]}><MISLocalBody />   </ProtectedRoute> } />
+          <Route path="/mis-reports/headerwise" element={ <ProtectedRoute permission={["misHeader"]}><MISHeader />   </ProtectedRoute> } />
+          <Route path="/mis-reports/districtwise" element={ <ProtectedRoute permission={["misDistrict"]}><MISDistrict />   </ProtectedRoute> } />
+          <Route path="/mis-reports/applicant" element={ <ProtectedRoute permission={["misApplicant"]}><MISApplicant />   </ProtectedRoute> } />
+      <Route path="/access-denied" element={<AccessDenied />} />
         </Routes>
       </div>
     </div>

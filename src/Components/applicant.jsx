@@ -253,9 +253,9 @@ const Table = ({ data, pagination = true }) => {
       "File No": fileDetails.fileNumber,
       "Transaction id": fileDetails.cmdaOrderId,
       "Zone": fileDetails.zone,
-      "Challan Amount (INR)": formatAmountWithCommas(fileDetails.transactionAmount),
       // "Budget Header": fileDetails.budgetHeaderNames,
       "Budget Header": budgetHeaderNames,
+      "Challan Amount (INR)": formatAmountWithCommas(fileDetails.transactionAmount),
       "Payment Status": fileDetails.status === 2 ? 'Paid' : 'Notpaid',
       "Gateway": fileDetails.gatewayName,
       "Payment Mode": "Credit Card"                  //Doubt Ram - Need to check
@@ -349,7 +349,8 @@ const Table = ({ data, pagination = true }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 text-xs">
-            {data.map((transaction) => (
+            {/* {data.map((transaction) => ( */}
+            {(currentRows ? currentRows : data).map((transaction) => (
               <tr>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button className="text-blue-600 hover:text-blue-900" onClick={() => onViewClick(transaction)}>View</button>
@@ -460,6 +461,16 @@ const ApplicantReport = () => {
       });
   };
 
+  // const handleClear = () => {                        //need to check
+  //   debugger
+  //   // Clear input fields
+  //   document.getElementById("from-date").value = "";
+  //   document.getElementById("to-date").value = "";
+  //   document.getElementById("applicantname").value = "";
+  //   // Clear data
+  //   setData([]);
+  // };
+
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-xl font-medium ">Applicant Reports</h1>
@@ -527,7 +538,9 @@ const ApplicantReport = () => {
             className="bg-[#0066FF] text-sm  text-white font-medium shadow-sm py-1.5 px-4 rounded">
             Submit
           </button>
-          <button className="bg-white shadow-sm border text-sm border-gray-300 text-gray-900 hover:bg-gray-50 font-medium py-1.5 px-4 rounded">
+          <button 
+            // onClick={handleClear}
+            className="bg-white shadow-sm border text-sm border-gray-300 text-gray-900 hover:bg-gray-50 font-medium py-1.5 px-4 rounded">
             Clear
           </button>
         </div>

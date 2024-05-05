@@ -501,7 +501,7 @@ const Table = ({ data, pagination = true }) => {
             ))}
           </tbody>
         </table>
-        {pagination && (
+        {pagination && data?.length  >0 && (
           <div>
             <nav
               className="flex items-center justify-between border-t border-gray-200 bg-white py-4"

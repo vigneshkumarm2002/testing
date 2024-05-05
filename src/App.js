@@ -1,5 +1,5 @@
-import { useState } from "react";
-import {HashRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {HashRouter as Router, Routes, Route, useAsyncError } from "react-router-dom";
 
 import Header from "./Components/header";
 import Sidebar from "./Components/sidebar";
@@ -22,16 +22,20 @@ function App() {
  
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+ 
   const handleLoginSuccess = () => {
     
     setIsLoggedIn(true);
   };
 
+
+  
+
   return (
     <Router>
       <div className="App">
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-       <Layout sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}  />
+       <Layout  sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
        <Routes>
        !isLoggedIn && <Route path="/login" element={<LoginUser onLoginSuccess={handleLoginSuccess} />} />
        <Route path="/payment" element={<PaymentIntro />} />

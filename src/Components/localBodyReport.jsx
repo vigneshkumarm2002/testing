@@ -254,6 +254,7 @@ const Table = ({ data, pagination = true }) => {
       "Challan No": fileDetails.challanNumber,
       "File No": fileDetails.fileNumber,
       "Transaction id": fileDetails.cmdaOrderId,
+      "Zone": fileDetails.zone,
       // "Budget Header": fileDetails.budgetHeaderNames,
       "Budget Header": budgetHeaderNames,
       "Challan Amount (INR)": formatAmountWithCommas(fileDetails.transactionAmount),
@@ -332,6 +333,9 @@ const Table = ({ data, pagination = true }) => {
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Transaction id
               </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Zone
+              </th>
 
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Challan Amount (INR)
@@ -348,7 +352,8 @@ const Table = ({ data, pagination = true }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 text-xs">
-            {data.map((transaction) => (
+            {/* {data.map((transaction) => ( */}
+            {(currentRows ? currentRows : data).map((transaction) => (
               <tr>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button className="text-blue-600 hover:text-blue-900" onClick={() => onViewClick(transaction)}>View</button>
@@ -359,6 +364,7 @@ const Table = ({ data, pagination = true }) => {
                 <td className="px-6 py-4 whitespace-nowrap">{transaction.challanNumber}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{transaction.fileNumber}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{transaction.cmdaOrderId}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{transaction.zone}</td>
                 {/* <td className="px-6 py-4 whitespace-nowrap">
                   {transaction.budgetHeaderNames.map((item, index) => (
                     <span key={index}>{item.budgetHeader}{index !== transaction.budgetHeaderNames.length - 1 && ', '}</span>
