@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+// import {HashRouter as Router, Routes, Route, useAsyncError } from "react-router-dom"; //22-05-2024
 import {BrowserRouter as Router, Routes, Route, useAsyncError } from "react-router-dom";
 
 import Header from "./Components/header";
