@@ -201,6 +201,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowDownTrayIcon, PrinterIcon } from "@heroicons/react/24/outline";
 import SingleReport from "./viewModal";
+import { Environment } from "../Environment";
 
 const Table = ({ data, pagination = true }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -423,7 +424,8 @@ const DistrictWiseReport = () => {
   
   useEffect(() => {
     // Fetch district names data from API
-    fetch("http://localhost:5063/api/GateWayReport/DistrictNames")
+    // fetch("http://localhost:5063/api/GateWayReport/DistrictNames")
+    fetch(`${Environment.apiBaseUrl}/api/GateWayReport/DistrictNames`)
       .then((response) => response.json())
       .then((data) => {
         // Assuming data is an array of district names options
@@ -445,7 +447,7 @@ const DistrictWiseReport = () => {
       return;
     }
 
-    const url = `http://localhost:5063/api/GateWayReport/DistrictReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&district=${encodeURIComponent(districtValue)}`;
+    const url = `${Environment.apiBaseUrl}/api/GateWayReport/DistrictReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&district=${encodeURIComponent(districtValue)}`;
 
     fetch(url, {
       method: "GET",

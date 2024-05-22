@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Environment } from '../Environment';
 
 const UserAccessRights = () => {
   const initialState= {
@@ -34,7 +35,8 @@ const UserAccessRights = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:5063/api/User/UserList');
+        //const response = await fetch('http://localhost:5063/api/User/UserList');
+        const response = await fetch(`${Environment.apiBaseUrl}/api/User/UserList`);
         if (!response.ok) {
           throw new Error('Failed to fetch users');
         }
@@ -138,7 +140,8 @@ const normalizeString = (str) => {
 
   const fetchPermission = async () => {
     try {
-      const response = await fetch(`http://localhost:5063/api/User/UserAccessGet?userID=${selectedUser}`);
+      // const response = await fetch(`http://localhost:5063/api/User/UserAccessGet?userID=${selectedUser}`);
+      const response = await fetch(`${Environment.apiBaseUrl}/api/User/UserAccessGet?userID=${selectedUser}`);
       if (!response.ok) {
         throw new Error('Failed to fetch users');
       }
@@ -159,7 +162,8 @@ const normalizeString = (str) => {
   
     try {
       // Assuming `users` is defined and contains `ip` and `name` properties
-      const response = await fetch("http://localhost:5063/api/User/UserAccessSave", {
+      // const response = await fetch("http://localhost:5063/api/User/UserAccessSave", {
+        const response = await fetch(`${Environment.apiBaseUrl}/api/User/UserAccessSave`, { 
         method: "POST",
         headers: {
           "Content-Type": "application/json",

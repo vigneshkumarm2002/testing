@@ -98,10 +98,11 @@
 //------------------------------------------- Ram New CODE 22/04/2024 -----------------------
 
 import { useState ,useEffect} from "react";
+import { Environment } from "../Environment";
 
 async function changePasswordApi(userId, oldPassword, newPassword) {
   try {
-    const response = await fetch("http://localhost:5063/api/User/ChangePassword", {
+    const response = await fetch(`${Environment.apiBaseUrl}/api/User/ChangePassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

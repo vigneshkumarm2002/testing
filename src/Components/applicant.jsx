@@ -201,6 +201,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowDownTrayIcon, PrinterIcon } from "@heroicons/react/24/outline";
 import SingleReport from "./viewModal";
+import { Environment } from "../Environment";
 
 const Table = ({ data, pagination = true }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -420,7 +421,8 @@ const ApplicantReport = () => {
 
   useEffect(() => {
     // Fetch applicant names data from API
-    fetch("http://localhost:5063/api/GateWayReport/ApplicantNames")
+    //fetch("http://localhost:5063/api/GateWayReport/ApplicantNames")
+    fetch(`${Environment.apiBaseUrl}/api/GateWayReport/ApplicantNames`)
       .then((response) => response.json())
       .then((data) => {
         // Assuming data is an array of district names options
@@ -442,7 +444,7 @@ const ApplicantReport = () => {
       return;
     }
 
-    const url = `http://localhost:5063/api/GateWayReport/ApplicantReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&applicantName=${encodeURIComponent(applicantValue)}`;
+    const url = `${Environment.apiBaseUrl}/api/GateWayReport/ApplicantReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&applicantName=${encodeURIComponent(applicantValue)}`;
 
     fetch(url, {
       method: "GET",

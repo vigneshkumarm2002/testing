@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Environment } from "../Environment";
 
 export default function LoginUser() {
   const [username, setUsername] = useState("");
@@ -29,7 +30,7 @@ export default function LoginUser() {
     event.preventDefault();
 
     // Send the data to your backend API
-    fetch("http://localhost:5063/api/User/UserVerification", {
+    fetch(`${Environment.apiBaseUrl}/api/User/UserVerification`, {
       method: "POST", // Change method to POST
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +75,7 @@ export default function LoginUser() {
 
   const storeUserAccess = async (id) => {
     try {
-      const url = `http://localhost:5063/api/User/UserAccessGetDetails?uId=${id}`;
+      const url = `${Environment.apiBaseUrl}/api/User/UserAccessGetDetails?uId=${id}`;
       const response = await fetch(url, {
         method: "GET",
         headers: {

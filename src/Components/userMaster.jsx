@@ -126,6 +126,7 @@
 
 
 import { useState } from "react";
+import { Environment } from "../Environment";
 
 export default function UserMaster() {
   const [role, setRole] = useState("user");
@@ -152,7 +153,7 @@ export default function UserMaster() {
     }
 
     // Send the data to your backend API
-    fetch("http://localhost:5063/api/User/UserRegister", {
+    fetch(`${Environment.apiBaseUrl}/api/User/UserRegister`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

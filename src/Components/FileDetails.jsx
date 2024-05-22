@@ -344,6 +344,7 @@
 /* Another Method */
 import React, { useState } from "react";
 import { ArrowDownTrayIcon, PrinterIcon } from "@heroicons/react/24/outline";
+import { Environment } from "../Environment";
 
 const FileDetails = () => {
   const [apiResponse, setApiResponse] = useState(null);
@@ -351,6 +352,8 @@ const FileDetails = () => {
   const [data, setData] = useState([]);
   const [challanHeaders, setChallanHeaders] = useState([]);
   const [showGrid, setShowGrid] = useState(true);
+
+
 
   const handleSubmit = () => {
     const fileNumberElement = document.getElementById("file-number");
@@ -365,8 +368,8 @@ const FileDetails = () => {
       setData([]);
       setError(null);
 
-      // const url = `http://localhost:5063/api/MISReport/FileDetails?fileNumber=${encodeURIComponent(fileNumber)}`;
-      const url = `http://localhost:5063/api/MISReport/FileDetailsList?fileNumber=${encodeURIComponent(fileNumber)}`;
+      // const url = `http://localhost:5063/api/MISReport/FileDetailsList?fileNumber=${encodeURIComponent(fileNumber)}`;
+      const url = `${Environment.apiBaseUrl}/api/MISReport/FileDetailsLists?fileNumber=${encodeURIComponent(fileNumber)}`;
       fetch(url, {
         method: "GET",
         headers: {
@@ -379,27 +382,27 @@ const FileDetails = () => {
           }
           return response.json();
         })
-        .then((apiResponse) => {
-          if (apiResponse.message && apiResponse.message !== "") {
-            throw new Error(apiResponse.message);
+        .then((res) => {
+          if (res.message && res.message !== "") {
+            throw new Error(res.message);
             setShowGrid(false);
           }
-          const dateOfSubmission = apiResponse.dateofSubmission ? new Date(apiResponse.dateofSubmission).toLocaleDateString() : '';
+          const dateOfSubmission = res.dateofSubmission ? new Date(res.dateofSubmission).toLocaleDateString() : '';
           setData({
-            "Developer Applicant Name": apiResponse.applicantName,
-            "File Number": apiResponse.fileNumber,
+            "Developer Applicant Name": res.applicantName,
+            "File Number": res.fileNumber,
             "Date of Submission": dateOfSubmission,
-            "Site Address": apiResponse.siteAddress,
-            "District": apiResponse.district,
-            "Taluk": apiResponse.taluk,
-            "Village": apiResponse.village,
-            "Local Body Name": apiResponse.localBody,
-            "Type of Application": apiResponse.typeofApplication,
-            "Proposal Type": apiResponse.proposalType,
-            "Type of Building": apiResponse.typeofBuilding,
+            "Site Address": res.siteAddress,
+            "District": res.district,
+            "Taluk": res.taluk,
+            "Village": res.village,
+            "Local Body Name": res.localBody,
+            "Type of Application": res.typeofApplication,
+            "Proposal Type": res.proposalType,
+            "Type of Building": res.typeofBuilding,
           });
-          setApiResponse(apiResponse);
-          setChallanHeaders(apiResponse.challanHeaders || []);
+          setApiResponse(res);
+          setChallanHeaders(res.challanHeaders || []);
           setShowGrid(true);
         })
         .catch((error) => {
@@ -409,6 +412,31 @@ const FileDetails = () => {
         });
     }
   };
+
+
+
+  function formatAmountWithCommas(amount) {
+    // Convert the number to a floating-point number
+    const number = parseFloat(amount);
+
+    // If the number is not a valid number, return it as is
+    if (isNaN(number)) {
+      return amount;
+    }
+
+    // Format the number with thousand separators
+    const formattedNumber = number.toLocaleString("en-IN", {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    });
+
+    // If the original number has no decimal part, append .00
+    if (formattedNumber.indexOf('.') === -1) {
+      return formattedNumber + '.00';
+    }
+
+    return formattedNumber;
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -471,36 +499,46 @@ const FileDetails = () => {
       </div>
 
       <div className="overflow-x-auto">
-        {challanHeaders && challanHeaders.length > 0 && (
-          <table className="mx-auto w-full sm:w-[600px] pb-4">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Budget Header</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL FEES (INR)</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL PENALTY (INR)</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL FEES PAID (INR)</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL PENALTY PAID (INR)</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">BALANCE FEES (INR)</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">BALANCE PENALTY (INR)</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL BALANCE (INR)</th>
+
+      {apiResponse?.budgets?.length > 0 &&  <table className="mx-auto w-full sm:w-[600px] pb-4">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Budget Header</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL FEES (INR)</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL PENALTY (INR)</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL FEES PAID (INR)</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL PENALTY PAID (INR)</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">BALANCE FEES (INR)</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">BALANCE PENALTY (INR)</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TOTAL BALANCE (INR)</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200 text-xs">
+            {apiResponse?.budgets?.map((challan) => (
+              <tr key={challan.challanNumber}>
+                <td className="px-6 py-4 whitespace-nowrap">{challan?.budgetHeadName}</td>
+                <td className="px-6 py-4 whitespace-nowrap  text-right">{formatAmountWithCommas(challan?.totalChallanFeeAmount)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(challan?.totalPenalInterest)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(challan?.challanFeeAmountPaid)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(challan?.penalInterestPaid)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(challan?.balanceChallanFeeAmount)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(challan?.balancePenalInterest)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(challan?.totalBalance)}</td>
               </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200 text-xs">
-              {challanHeaders.map((challan) => (
-                <tr key={challan.challanNumber}>
-                  <td className="px-6 py-4 whitespace-nowrap">{challan.budgetHead}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{challan.totalChallanFeeAmount}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{challan.totalPenalInterest}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{challan.challanFeeAmountPaid}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{challan.penalInterestPaid}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{challan.balanceChallanFeeAmount}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{challan.balancePenalInterest}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{challan.totalBalance}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+            ))}
+            <tr>
+              <td className="px-6 py-4 whitespace-nowrap">Total</td>
+              <td className="px-6 py-4 whitespace-nowrap  text-right">{formatAmountWithCommas(apiResponse?.overallTotalFees)}</td>
+              <td className="px-6 py-4 whitespace-nowrap  text-right">{formatAmountWithCommas(apiResponse?.overallPenaltyInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap  text-right">{formatAmountWithCommas(apiResponse?.overallTotalFeesPaid)}</td>
+              <td className="px-6 py-4 whitespace-nowrap  text-right">{formatAmountWithCommas(apiResponse?.overallTotalPenaltyPaid)}</td>
+              <td className="px-6 py-4 whitespace-nowrap  text-right">{formatAmountWithCommas(apiResponse?.overallBalanceFees)}</td>
+              <td className="px-6 py-4 whitespace-nowrap  text-right">{formatAmountWithCommas(apiResponse?.overallBalancePenalty)}</td>
+              <td className="px-6 py-4 whitespace-nowrap  text-right">{formatAmountWithCommas(apiResponse?.overallTotalBalance)}</td>
+            </tr>
+          </tbody>
+        </table> }
+
       </div>
     </div>
   );

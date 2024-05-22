@@ -1258,6 +1258,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowDownTrayIcon, PrinterIcon } from "@heroicons/react/24/outline";
 import SingleReport from "../viewModal";
+import { Environment } from "../../Environment";
 
 const Table = ({ data, pagination = true }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -1270,7 +1271,7 @@ const Table = ({ data, pagination = true }) => {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   // const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
 
-  const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
+  //const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
 
   // Change page
   const nextPage = () => {
@@ -1552,8 +1553,9 @@ const Table = ({ data, pagination = true }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 text-xs">
-            {/* {data.map((transaction) => ( */}
-            {(currentRows ? currentRows : data).map((transaction) => (
+            {/* {data.map((transaction) => (                                        //THIS SHOWS EVERY DATA WITHOUT PAGINATION */}
+            {/* {(currentRows ? currentRows : data).map((transaction) => (       //THIS IS FOR PAGINATION */}
+            {data?.reportDataLists?.map((transaction) => (
               <tr key={transaction.fileMasterID}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button className="text-blue-600 hover:text-blue-900" onClick={() => onViewClick(transaction)}>View</button>
@@ -1611,6 +1613,53 @@ const Table = ({ data, pagination = true }) => {
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.budgetTotalBalance)}</td>                               
               </tr>
             ))}
+            <tr>
+              <td colSpan={8}></td>
+              <td className="px-6 py-4 whitespace-nowrap ">Total</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForLandSqmOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForLandSqmOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForLandSqmOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForBuildingPerSqmOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForBuildingPerSqmOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForBuildingPerSqmOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.regulationChargeForLandOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.regulationChargeForLandOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.regulationChargeForLandOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForBuildingOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForBuildingOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForBuildingOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForDisplayBoardOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForDisplayBoardOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForDisplayBoardOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.idccmwssbOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.idccmwssbOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.idccmwssbOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.iaChargeOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.iaChargeOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.iaChargeOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.osrChargesOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.osrChargesOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.osrChargesOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.premiumFSIChargesOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.premiumFSIChargesOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.premiumFSIChargesOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.flagDayChargeOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.flagDayChargeOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.flagDayChargeOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.cautionDepositOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.cautionDepositOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.cautionDepositOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.balanceScrutinyFeesOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.balanceScrutinyFeesOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.balanceScrutinyFeesOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.sdstpOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.sdstpOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.sdstpOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.shelterFeeOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.shelterFeeOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.shelterFeeOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.overallBudgetTotalBalance)}</td>
+            </tr>
           </tbody>
         </table>
         {pagination && (
@@ -1660,7 +1709,8 @@ const MISDistrict = () => {
 
   useEffect(() => {
     // Fetch district names data from API
-    fetch("http://localhost:5063/api/MISReport/DistrictNames")
+    // fetch("http://localhost:5063/api/MISReport/DistrictNames")
+    fetch(`${Environment.apiBaseUrl}/api/MISReport/DistrictNames`)
       .then((response) => response.json())
       .then((data) => {
         // Assuming data is an array of district names options
@@ -1682,7 +1732,7 @@ const MISDistrict = () => {
       return;
     }
 
-    const url = `http://localhost:5063/api/MISReport/DistrictReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&district=${encodeURIComponent(districtValue)}`;
+    const url = `${Environment.apiBaseUrl}/api/MISReport/DistrictReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&district=${encodeURIComponent(districtValue)}`;
 
     fetch(url, {
       method: "GET",
@@ -1773,7 +1823,7 @@ const MISDistrict = () => {
           </button>
         </div>
       </div>
-      {data && <Table data={data} />}
+      {data && <Table data={data} pagination={false}/>}
     </div>
   )
 }

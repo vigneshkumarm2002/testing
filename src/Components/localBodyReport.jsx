@@ -189,6 +189,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowDownTrayIcon, PrinterIcon } from "@heroicons/react/24/outline";
 import SingleReport from "./viewModal";
+import { Environment } from "../Environment";
 
 
 const Table = ({ data, pagination = true }) => {
@@ -428,7 +429,8 @@ const LocalBodyReport = () => {
 
   useEffect(() => {
     // Fetch localbody names data from API
-    fetch("http://localhost:5063/api/GateWayReport/LocalBodyNames")
+    // fetch("http://localhost:5063/api/GateWayReport/LocalBodyNames")
+    fetch(`${Environment.apiBaseUrl}/api/GateWayReport/LocalBodyNames`)
       .then((response) => response.json())
       .then((data) => {
         // Assuming data is an array of localbody names options
@@ -451,7 +453,7 @@ const LocalBodyReport = () => {
       return;
     }
 
-    const url = `http://localhost:5063/api/GateWayReport/LocalBodyReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&localbody=${encodeURIComponent(localbodyValue)}`;
+    const url = `${Environment.apiBaseUrl}/api/GateWayReport/LocalBodyReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&localbody=${encodeURIComponent(localbodyValue)}`;
 
     fetch(url, {
       method: "GET",

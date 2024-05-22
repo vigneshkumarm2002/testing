@@ -1241,6 +1241,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowDownTrayIcon, PrinterIcon } from "@heroicons/react/24/outline";
 import SingleReport from "../viewModal";
+import { Environment } from "../../Environment";
 
 
 const Table = ({ data, pagination = true }) => {
@@ -1254,7 +1255,7 @@ const Table = ({ data, pagination = true }) => {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   // const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
 
-  const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
+  //const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
 
   // Change page
   const nextPage = () => {
@@ -1277,53 +1278,53 @@ const Table = ({ data, pagination = true }) => {
       "File No": fileDetails.fileNumber,
       "Local Body": fileDetails.localBody,
       "Village": fileDetails.village,
-      "Applicant Name": fileDetails.applicantName,      
+      "Applicant Name": fileDetails.applicantName,
       "District": fileDetails.district,
       "Type of Application": fileDetails.typeofApplication,
       "Proposal Type": fileDetails.proposalType,
       "Development charges for land Sq.m - Total Fees(INR)": formatAmountWithCommas(fileDetails.developmentChargesForLandSqmChallanFeeAmount),
       "Development charges for land Sq.m - Penal Interest (INR)": formatAmountWithCommas(fileDetails.developmentChargesForLandSqmPenalInterest),
-      "Development charges for land Sq.m - Total Balance": formatAmountWithCommas(fileDetails.developmentChargesForLandSqmTotalBalance),                
+      "Development charges for land Sq.m - Total Balance": formatAmountWithCommas(fileDetails.developmentChargesForLandSqmTotalBalance),
       "Development charges for Building per Sq.m - Total Fees(INR)": formatAmountWithCommas(fileDetails.developmentChargesForBuildingPerSqmChallanFeeAmount),
       "Development charges for Building per Sq.m - Penal Interest (INR)": formatAmountWithCommas(fileDetails.developmentChargesForBuildingPerSqmPenalInterest),
-      "Development charges for Building per Sq.m - Total Balance": formatAmountWithCommas(fileDetails.developmentChargesForBuildingPerSqmTotalBalance),                
-      "Requlation Charge for land - Total Fees(INR)":  formatAmountWithCommas(fileDetails.regulationChargeForLandChallanFeeAmount),
+      "Development charges for Building per Sq.m - Total Balance": formatAmountWithCommas(fileDetails.developmentChargesForBuildingPerSqmTotalBalance),
+      "Requlation Charge for land - Total Fees(INR)": formatAmountWithCommas(fileDetails.regulationChargeForLandChallanFeeAmount),
       "Requlation Charge for land - Penal Interest (INR)": formatAmountWithCommas(fileDetails.regulationChargeForLandPenalInterest),
-      "Requlation Charge for land - Total Balance": formatAmountWithCommas(fileDetails.regulationChargeForLandTotalBalance),                
+      "Requlation Charge for land - Total Balance": formatAmountWithCommas(fileDetails.regulationChargeForLandTotalBalance),
       "Security Deposit for building - Total Fees(INR)": formatAmountWithCommas(fileDetails.securityDepositForBuildingChallanFeeAmount),
       "Security Deposit for building - Penal Interest (INR)": formatAmountWithCommas(fileDetails.securityDepositForBuildingPenalInterest),
-      "Security Deposit for building - Total Balance": formatAmountWithCommas(fileDetails.securityDepositForBuildingTotalBalance),              
+      "Security Deposit for building - Total Balance": formatAmountWithCommas(fileDetails.securityDepositForBuildingTotalBalance),
       "Security Deposit for Display Board - Total Fees(INR)": formatAmountWithCommas(fileDetails.securityDepositForDisplayBoardChallanFeeAmount),
       "Security Deposit for Display Board - Penal Interest(INR)": formatAmountWithCommas(fileDetails.securityDepositForDisplayBoardPenalInterest),
-      "Security Deposit for Display Board - Total Balance": formatAmountWithCommas(fileDetails.securityDepositForDisplayBoardTotalBalance),                
+      "Security Deposit for Display Board - Total Balance": formatAmountWithCommas(fileDetails.securityDepositForDisplayBoardTotalBalance),
       "IDC - CMWSSB - Total Fees(INR)": formatAmountWithCommas(fileDetails.idccmwssbChallanFeeAmount),
       "IDC - CMWSSB - Penal Interest (INR)": formatAmountWithCommas(fileDetails.idccmwssbPenalInterest),
-      "IDC - CMWSSB - Total Balance": formatAmountWithCommas(fileDetails.idccmwssbTotalBalance),                
+      "IDC - CMWSSB - Total Balance": formatAmountWithCommas(fileDetails.idccmwssbTotalBalance),
       "I & A Charge - Total Fees(INR)": formatAmountWithCommas(fileDetails.iaChargeChallanFeeAmount),
       "I & A Charge - Penal Interest(INR)": formatAmountWithCommas(fileDetails.iaChargePenalInterest),
-      "I & A Charge - Total Balance": formatAmountWithCommas(fileDetails.iaChargeTotalBalance),                
+      "I & A Charge - Total Balance": formatAmountWithCommas(fileDetails.iaChargeTotalBalance),
       "OSR Charges - Total Fees(INR)": formatAmountWithCommas(fileDetails.osrChargesChallanFeeAmount),
       "OSR Charges - Penal Interest(INR)": formatAmountWithCommas(fileDetails.osrChargesPenalInterest),
-      "OSR Charges - Total Balance": formatAmountWithCommas(fileDetails.osrChargesTotalBalance),              
+      "OSR Charges - Total Balance": formatAmountWithCommas(fileDetails.osrChargesTotalBalance),
       "Premium FSI Charges - Total Fees(INR)": formatAmountWithCommas(fileDetails.premiumFSIChargesChallanFeeAmount),
       "Premium FSI Charges - Penal Interest(INR)": formatAmountWithCommas(fileDetails.premiumFSIChargesPenalInterest),
-      "Premium FSI Charges - Total Balance": formatAmountWithCommas(fileDetails.premiumFSIChargesTotalBalance),                
+      "Premium FSI Charges - Total Balance": formatAmountWithCommas(fileDetails.premiumFSIChargesTotalBalance),
       "Flag Day Charge - Total Fees(INR)": formatAmountWithCommas(fileDetails.flagDayChargeChallanFeeAmount),
       "Flag Day Charge - Penal Interest(INR)": formatAmountWithCommas(fileDetails.flagDayChargePenalInterest),
-      "Flag Day Charge - Total Balance": formatAmountWithCommas(fileDetails.flagDayChargeTotalBalance),          
+      "Flag Day Charge - Total Balance": formatAmountWithCommas(fileDetails.flagDayChargeTotalBalance),
       "Caution Deposit - Total Fees(INR)": formatAmountWithCommas(fileDetails.cautionDepositChallanFeeAmount),
       "Caution Deposit - Penal Interest(INR)": formatAmountWithCommas(fileDetails.cautionDepositPenalInterest),
-      "Caution Deposit - Total Balance": formatAmountWithCommas(fileDetails.cautionDepositTotalBalance),                
+      "Caution Deposit - Total Balance": formatAmountWithCommas(fileDetails.cautionDepositTotalBalance),
       "Balance Scrutiny Fees - Total Fees(INR)": formatAmountWithCommas(fileDetails.balanceScrutinyFeesChallanFeeAmount),
       "Balance Scrutiny Fees - Penal Interest(INR)": formatAmountWithCommas(fileDetails.balanceScrutinyFeesPenalInterest),
-      "Balance Scrutiny Fees - Total Balance": formatAmountWithCommas(fileDetails.balanceScrutinyFeesTotalBalance),                
+      "Balance Scrutiny Fees - Total Balance": formatAmountWithCommas(fileDetails.balanceScrutinyFeesTotalBalance),
       "SD - STP - Total Fees(INR)": formatAmountWithCommas(fileDetails.sdstpChallanFeeAmount),
       "SD - STP - Penal Interest(INR)": formatAmountWithCommas(fileDetails.sdstpPenalInterest),
-      "SD - STP - Total Balance": formatAmountWithCommas(fileDetails.sdstpTotalBalance),                
+      "SD - STP - Total Balance": formatAmountWithCommas(fileDetails.sdstpTotalBalance),
       "Shelter Fee - Total Fees(INR)": formatAmountWithCommas(fileDetails.shelterFeeChallanFeeAmount),
       "Shelter Fee - Penal Interest(INR)": formatAmountWithCommas(fileDetails.shelterFeePenalInterest),
-      "Shelter Fee - Total Balance": formatAmountWithCommas(fileDetails.shelterFeeTotalBalance),                
-      "Total Balance (INR)": formatAmountWithCommas(fileDetails.budgetTotalBalance)     
+      "Shelter Fee - Total Balance": formatAmountWithCommas(fileDetails.shelterFeeTotalBalance),
+      "Total Balance (INR)": formatAmountWithCommas(fileDetails.budgetTotalBalance)
     }
     setSingleData(data)
     setShowModal(true)
@@ -1536,8 +1537,9 @@ const Table = ({ data, pagination = true }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 text-xs">
-            {/* {data.map((transaction) => ( */}
-            {(currentRows ? currentRows : data).map((transaction) => (
+            {/* {data.map((transaction) => (                                        //THIS SHOWS EVERY DATA WITHOUT PAGINATION */}
+            {/* {(currentRows ? currentRows : data).map((transaction) => (       //THIS IS FOR PAGINATION */}
+            {data?.reportDataLists?.map((transaction) => (
               <tr key={transaction.fileMasterID}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button className="text-blue-600 hover:text-blue-900" onClick={() => onViewClick(transaction)}>View</button>
@@ -1552,49 +1554,96 @@ const Table = ({ data, pagination = true }) => {
                 <td className="px-6 py-4 whitespace-nowrap">{transaction.proposalType}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.developmentChargesForLandSqmChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.developmentChargesForLandSqmPenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.developmentChargesForLandSqmTotalBalance)}</td>                
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.developmentChargesForLandSqmTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.developmentChargesForBuildingPerSqmChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.developmentChargesForBuildingPerSqmPenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.developmentChargesForBuildingPerSqmTotalBalance)}</td>                
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.developmentChargesForBuildingPerSqmTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.regulationChargeForLandChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.regulationChargeForLandPenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.regulationChargeForLandTotalBalance)}</td>                
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.regulationChargeForLandTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.securityDepositForBuildingChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.securityDepositForBuildingPenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.securityDepositForBuildingTotalBalance)}</td>              
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.securityDepositForBuildingTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.securityDepositForDisplayBoardChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.securityDepositForDisplayBoardPenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.securityDepositForDisplayBoardTotalBalance)}</td>                
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.securityDepositForDisplayBoardTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.idccmwssbChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.idccmwssbPenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.idccmwssbTotalBalance)}</td>                
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.idccmwssbTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.iaChargeChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.iaChargePenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.iaChargeTotalBalance)}</td>                
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.iaChargeTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.osrChargesChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.osrChargesPenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.osrChargesTotalBalance)}</td>              
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.osrChargesTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.premiumFSIChargesChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.premiumFSIChargesPenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.premiumFSIChargesTotalBalance)}</td>                
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.premiumFSIChargesTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.flagDayChargeChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.flagDayChargePenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.flagDayChargeTotalBalance)}</td>          
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.flagDayChargeTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.cautionDepositChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.cautionDepositPenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.cautionDepositTotalBalance)}</td>                
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.cautionDepositTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.balanceScrutinyFeesChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.balanceScrutinyFeesPenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.balanceScrutinyFeesTotalBalance)}</td>                
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.balanceScrutinyFeesTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.sdstpChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.sdstpPenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.sdstpTotalBalance)}</td>                
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.sdstpTotalBalance)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.shelterFeeChallanFeeAmount)}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.shelterFeePenalInterest)}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.shelterFeeTotalBalance)}</td>                
-                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.budgetTotalBalance)}</td>                               
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.shelterFeeTotalBalance)}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.budgetTotalBalance)}</td>
               </tr>
             ))}
+            <tr>
+              <td colSpan={8}></td>
+              <td className="px-6 py-4 whitespace-nowrap ">Total</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForLandSqmOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForLandSqmOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForLandSqmOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForBuildingPerSqmOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForBuildingPerSqmOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.developmentChargesForBuildingPerSqmOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.regulationChargeForLandOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.regulationChargeForLandOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.regulationChargeForLandOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForBuildingOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForBuildingOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForBuildingOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForDisplayBoardOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForDisplayBoardOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.securityDepositForDisplayBoardOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.idccmwssbOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.idccmwssbOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.idccmwssbOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.iaChargeOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.iaChargeOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.iaChargeOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.osrChargesOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.osrChargesOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.osrChargesOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.premiumFSIChargesOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.premiumFSIChargesOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.premiumFSIChargesOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.flagDayChargeOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.flagDayChargeOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.flagDayChargeOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.cautionDepositOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.cautionDepositOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.cautionDepositOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.balanceScrutinyFeesOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.balanceScrutinyFeesOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.balanceScrutinyFeesOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.sdstpOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.sdstpOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.sdstpOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.shelterFeeOverallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.shelterFeeOverallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.shelterFeeOverallTotalBalance)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.overallBudgetTotalBalance)}</td>
+            </tr>
           </tbody>
         </table>
         {pagination && (
@@ -1644,7 +1693,8 @@ const MISLocalBody = () => {
 
   useEffect(() => {
     // Fetch localbody names data from API
-    fetch("http://localhost:5063/api/MISReport/LocalBodyNames")
+    //fetch("http://localhost:5063/api/MISReport/LocalBodyNames")
+    fetch(`${Environment.apiBaseUrl}/api/MISReport/LocalBodyNames`)
       .then((response) => response.json())
       .then((data) => {
         // Assuming data is an array of localbody names options
@@ -1665,7 +1715,7 @@ const MISLocalBody = () => {
       return;
     }
 
-    const url = `http://localhost:5063/api/MISReport/LocalBodyReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&localbody=${encodeURIComponent(localbodyValue)}`;
+    const url = `${Environment.apiBaseUrl}/api/MISReport/LocalBodyReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&localbody=${encodeURIComponent(localbodyValue)}`;
 
     fetch(url, {
       method: "GET",
@@ -1750,7 +1800,7 @@ const MISLocalBody = () => {
           </button>
         </div>
       </div>
-      {data && <Table data={data} />}
+      {data && <Table data={data} pagination={false} />}
     </div>
   )
 }

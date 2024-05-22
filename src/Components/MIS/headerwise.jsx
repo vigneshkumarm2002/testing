@@ -619,6 +619,9 @@
 import React, { useState, useEffect } from "react";
 import { ArrowDownTrayIcon, PrinterIcon } from "@heroicons/react/24/outline";
 import SingleReport from "../viewModal";
+import { Environment } from "../../Environment";
+
+
 
 const Table = ({ data, pagination = true }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -631,7 +634,7 @@ const Table = ({ data, pagination = true }) => {
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   // const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
 
-  const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
+  //const currentRows = data?.slice(indexOfFirstRow, indexOfLastRow);
 
   // Change page
   const nextPage = () => {
@@ -739,8 +742,9 @@ const Table = ({ data, pagination = true }) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 text-xs">
-            {/* {data.map((transaction) => ( */}
-            {(currentRows ? currentRows : data).map((transaction) => (
+            {/* {data.map((transaction) => (                                        //THIS SHOWS EVERY DATA WITHOUT PAGINATION */}
+            {/* {(currentRows ? currentRows : data).map((transaction) => (       //THIS IS FOR PAGINATION */}
+            {data?.misHeaderList?.map((transaction) => (
               <tr key={transaction.challanNumber}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <button className="text-blue-600 hover:text-blue-900" onClick={() => onViewClick(transaction)}>View</button>
@@ -755,9 +759,17 @@ const Table = ({ data, pagination = true }) => {
                 <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(transaction.totalBalance)}</td>
               </tr>
             ))}
+
+            <tr>
+              <td colSpan={5}></td>
+              <td className="px-6 py-4 whitespace-nowrap ">Total</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.overallTotalFee)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.overallPenalInterest)}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-right">{formatAmountWithCommas(data?.overallTotalBalance)}</td>
+            </tr>
           </tbody>
         </table>
-        {pagination && ( 
+        {pagination && (
           <div>
             <nav
               className="flex items-center justify-between border-t border-gray-200 bg-white py-4"
@@ -804,7 +816,8 @@ const MISHeader = () => {
 
   useEffect(() => {
     // Fetch header names data from API
-    fetch("http://localhost:5063/api/GateWayReport/HeaderNames")
+    // fetch("http://localhost:5063/api/GateWayReport/HeaderNames")
+    fetch(`${Environment.apiBaseUrl}/api/GateWayReport/HeaderNames`)
       .then((response) => response.json())
       .then((data) => {
         // Assuming data is an array of header names options
@@ -826,8 +839,8 @@ const MISHeader = () => {
       return;
     }
 
-    const url = `http://localhost:5063/api/MISReport/HeaderReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&headers=${encodeURIComponent(headersValue)}`;
-
+    const url = `${Environment.apiBaseUrl}/api/MISReport/HeaderReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&headers=${encodeURIComponent(headersValue)}`;
+    
     fetch(url, {
       method: "GET",
       headers: {
@@ -910,7 +923,7 @@ const MISHeader = () => {
           </button>
         </div>
       </div>
-      {data && <Table data={data}  />}
+      {data && <Table data={data} pagination={false} />}
     </div>
   );
 };

@@ -368,6 +368,7 @@
 import React, { useState, useEffect } from "react";
 import { ArrowDownTrayIcon, PrinterIcon } from "@heroicons/react/24/outline";
 import SingleReport from "./viewModal";
+import { Environment } from "../Environment";
 
 const Table = ({ data, pagination = true }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -549,7 +550,8 @@ const TransactionReport = () => {
 
   useEffect(() => {
     // Fetch payment gateways data from API
-    fetch("http://localhost:5063/api/GateWayReport/GatewayNames")
+    // fetch("http://localhost:5063/api/GateWayReport/GatewayNames")
+    fetch(`${Environment.apiBaseUrl}/api/GateWayReport/GatewayNames`)
       .then((response) => response.json())
       .then((data) => {
         // Assuming data is an array of payment gateway options
@@ -570,7 +572,7 @@ const TransactionReport = () => {
       return;
     }
 
-    const url = `http://localhost:5063/api/GateWayReport/TransactionReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&gateway=${encodeURIComponent(gatewayValue)}`;
+    const url = `${Environment.apiBaseUrl}/api/GateWayReport/TransactionReportSave?fromdate=${encodeURIComponent(fromDateValue)}&todate=${encodeURIComponent(toDateValue)}&gateway=${encodeURIComponent(gatewayValue)}`;
 
     fetch(url, {
       method: "GET",
